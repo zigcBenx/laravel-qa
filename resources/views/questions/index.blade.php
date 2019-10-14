@@ -5,20 +5,26 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">All questions</div>
+                <div class="card-header">All Questions</div>
 
                 <div class="card-body">
-                    @foreach ($questions as $question)
+                   @foreach ($questions as $question)
                         <div class="media">
                             <div class="media-body">
-                                <h3 class="mt-0">{{$question->title}}</h3>
-                                {{str_limit($question->body,250)}}
-                            </div>
+                                <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
+                                <p class="lead">
+                                    Asked by 
+                                    <a href="{{ $question->user->url }}">{{ $question->user->name }}</a> 
+                                    <small class="text-muted">{{ $question->created_date }}</small>
+                                </p>
+                                {{ str_limit($question->body, 250) }}
+                            </div>                        
                         </div>
                         <hr>
-                    @endforeach
+                   @endforeach
+
                     <div class="mx-auto">
-                        {{ $questions->links()  }}
+                        {{ $questions->links() }}
                     </div>
                 </div>
             </div>
