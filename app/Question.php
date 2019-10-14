@@ -25,4 +25,14 @@ class Question extends Model
     public function getCreatedDateAttribute(){
     	return $this->created_at->diffForHumans(); // How many days/months/years ago
     }
+
+    public function getStatusAttribute(){
+        if ($this->answers >0){
+            if ($this->best_answer_id != null){
+                return 'answered-accepted';
+            }
+            return 'answered';
+        }
+        return 'unanswered';
+    }
 }
