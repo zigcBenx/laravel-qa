@@ -16,8 +16,9 @@
                 </div>
 
                 <div class="card-body">
-                   @foreach ($questions as $question)
-                        <div class="media">
+                    @include ('layouts._messages')
+                    @foreach ($questions as $question)
+                         <div class="media">
                             <div class="d-flex flex-column counters">
                                 <div class="vote">
                                     <strong>{{ $question->votes }}</strong> {{ str_plural('vote',$question->votes) }}
@@ -40,7 +41,7 @@
                             </div>                        
                         </div>
                         <hr>
-                   @endforeach
+                    @endforeach
 
                     <div class="mx-auto">
                         {{ $questions->links() }}
