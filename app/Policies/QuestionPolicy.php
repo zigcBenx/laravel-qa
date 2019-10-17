@@ -2,15 +2,13 @@
 
 namespace App\Policies;
 
-use App\Question;
 use App\User;
+use App\Question;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class QuestionPolicy
 {
-    use HandlesAuthorization;
-
-  
+    use HandlesAuthorization;    
 
     /**
      * Determine whether the user can update the question.
@@ -35,5 +33,4 @@ class QuestionPolicy
     {
         return $user->id === $question->user_id && $question->answers_count < 1;
     }
-
 }
