@@ -13,16 +13,16 @@
 			}
 		},
 		methods: {
-			edit(){
+			edit () {
 				this.beforeEditCache = this.body;
 				this.editing = true;
 			},
-			cancel(){
+			cancel () {
 				this.body = this.beforeEditCache;
 				this.editing = false;
 			},
-			update(){
-				axios.patch(`/questions/${this.questionId}/answers/${this.id}`, {
+			update () {
+				axios.patch(this.endpoint, {
 					body: this.body
 				})
 				.then(res => {
@@ -34,11 +34,30 @@
 				.catch(err => {
 					alert(err.response.data.message);
 				});
+			},
+			destroy () {
+				if(confirm("Are you sure?")){
+					axios.delete(this.endpoint)
+					.then(res => {
+
+						$(this.$el).fadeOut(500, () => {
+							alert(res.data.message);
+						});
+
+					})
+					.catch(err => {
+						alert("failed"+err.response.data.message);
+					});
+					
+				}
 			}
 		},
 		computed: {
 			isInvalid () {
 				return this.body.length < 10;
+			},
+			endpoint () {
+				return `/questions/${this.questionId}/answers/${this.id}`;
 			}
 		} 
 	}
