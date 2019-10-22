@@ -19,19 +19,16 @@
 			classes () {
 				return [
 					'favorite','mt-2',
-					! this.signIn ? 'off' : (this.isFavorited ? 'favorited' : '')
+					! this.signedIn ? 'off' : (this.isFavorited ? 'favorited' : '')
 				];
 			},
 			endpoint () {
 				return `/questions/${this.id}/favorites`;
-			},
-			signIn(){
-				return window.Auth.signedIn;
 			}
 		},
 		methods: {
 			toggle() {
-				if(! this.signIn){
+				if(! this.signedIn){
 					this.$toast.warning('Please login to favorite this question',"Warning", {
 						timeout: 3000,
 						position: 'bottomLeft'
