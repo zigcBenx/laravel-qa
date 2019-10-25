@@ -1992,11 +1992,7 @@ __webpack_require__.r(__webpack_exports__);
         position: 'center',
         buttons: [['<button><b>YES</b></button>', function (instance, toast) {
           axios["delete"](_this2.endpoint).then(function (res) {
-            $(_this2.$el).fadeOut(500, function () {
-              _this2.$toast.success(res.data.message, 'Success', {
-                timeout: 3000
-              });
-            });
+            _this2.$emit('deleted');
           });
           instance.hide({
             transitionOut: 'fadeOut'
@@ -2031,6 +2027,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Answer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Answer.vue */ "./resources/js/components/Answer.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -2076,7 +2074,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   created: function created() {
     this.fetch("/questions/".concat(this.questionId, "/answers"));
   },
-  methods: {
+  methods: _defineProperty({
     remove: function remove(index) {
       this.answers.splice(index, 1);
       this.count--;
@@ -2094,7 +2092,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         _this.nextUrl = data.next_page_url;
       });
     }
-  },
+  }, "remove", function remove(index) {
+    this.answers.splice(index, 1);
+    this.count--;
+  }),
   computed: {
     title: function title() {
       return this.count + " " + (this.count > 1 ? 'Answers' : 'Answer');
@@ -38463,10 +38464,15 @@ var render = function() {
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),
-                _vm._l(_vm.answers, function(answer) {
+                _vm._l(_vm.answers, function(answer, index) {
                   return _c("answer", {
                     key: answer.id,
-                    attrs: { answer: answer }
+                    attrs: { answer: answer },
+                    on: {
+                      deleted: function($event) {
+                        return _vm.remove(index)
+                      }
+                    }
                   })
                 }),
                 _vm._v(" "),
